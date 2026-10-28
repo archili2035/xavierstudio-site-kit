@@ -70,7 +70,10 @@ h3,
 h4 {
   font-family: var(--font-serif);
   font-weight: var(--weight-bold);
-  color: var(--ink);
+  /* 继承而非写死：容器一旦设置 color（深色色带、第三方页面的彩色 hero），
+     标题要跟着走。写死 var(--ink) 会把这些容器的文字压成深色，是踩过的坑。
+     body 已设 var(--ink)，默认效果不变。 */
+  color: inherit;
   text-wrap: balance;
 }
 
@@ -233,15 +236,9 @@ li + li {
   background: var(--surface-alt);
 }
 
+/* 标题继承 color，因此这里设一次即可，不必再逐级覆盖 */
 .band-inverse {
   background: var(--surface-inverse);
-  color: var(--ink-on-inverse);
-}
-
-.band-inverse h1,
-.band-inverse h2,
-.band-inverse h3,
-.band-inverse h4 {
   color: var(--ink-on-inverse);
 }
 

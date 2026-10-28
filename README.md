@@ -3,7 +3,7 @@
 个人站点的视觉系统与目录规范。供门户（home-portal）与各内容仓库共同引用，
 最终封装成 WorkBuddy Skill，新建仓库时一次性带齐规范。
 
-> 当前状态：**v0.1.0 待验收**。只完成了样式层，脚手架与合规检查尚未开工。
+> 当前状态：**v0.1.2 已落地**。门户、Health、AIKnowledge（入口页 + 锚点页）均已接入。
 
 ## 风格口径
 
@@ -61,9 +61,11 @@ python -m http.server 4399
 
 ## 待办
 
-- [ ] 视觉验收
-- [ ] `conventions/`：目录规范、portal.json schema（补 `theme_version`）、DOM 约定
-- [ ] `scripts/`：`init-repo` 脚手架、`sync-theme` 同步、`check-repo` 合规检查
-- [ ] 接入门户 → Health → AIKnowledge 锚点页
-- [ ] 修掉阅读器把 `<link>` 一并改写的 bug
-- [ ] 封装为 Skill 并推 GitHub
+- [x] 视觉验收
+- [x] `conventions/`：目录规范、portal.json 契约
+- [x] `scripts/`：`init-repo` / `sync-theme` / `check-repo`
+- [x] 接入门户 → Health → AIKnowledge 锚点页
+- [x] 修掉阅读器把 `<link>` 一并改写的 bug
+- [ ] AIKnowledge 剩余 9 个页面迁移
+- [ ] Health 的 QUICKSTART.html / README.html 迁移
+- [ ] 推 GitHub 并装为用户级 Skill
