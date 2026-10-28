@@ -1,0 +1,4 @@
+# 临时截图与本地产物
+_*.png
+.DS_Store
+Thumbs.db
