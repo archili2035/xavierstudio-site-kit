@@ -45,6 +45,12 @@ video {
   display: block;
 }
 
+/* 组件一旦显式声明 display，就会压过 [hidden] 的 UA 样式。
+   这是反复踩的坑，在重置里一次性兜住。 */
+[hidden] {
+  display: none !important;
+}
+
 ::selection {
   background: var(--accent);
   color: var(--ink-on-accent);
