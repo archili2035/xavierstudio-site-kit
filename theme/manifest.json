@@ -1,6 +1,6 @@
 {
-  "name": "site-kit-theme",
-  "version": "0.1.2",
+  "name": "xavierstudio-site-kit-theme",
+  "version": "0.2.0",
   "files": [
     "tokens.css",
     "base.css"

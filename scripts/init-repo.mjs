@@ -101,7 +101,7 @@ if (!fs.existsSync(entryPath)) {
     <div class="grid">
       <div class="card">
         <strong>第一个条目</strong>
-        <span>替换成真实内容。可用组件见 site-kit 的 theme/preview.html。</span>
+        <span>替换成真实内容。可用组件见 xavierstudio-site-kit 的 theme/preview.html。</span>
       </div>
     </div>
   </div>

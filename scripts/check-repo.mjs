@@ -95,7 +95,7 @@ function checkRepo(repoPath) {
     if (!pj.theme_version) {
       add("warn", "portal.json 没有 theme_version，无法判断是否过期");
     } else if (pj.theme_version !== THEME_VERSION) {
-      add("warn", `theme 落后：仓库 ${pj.theme_version}，site-kit ${THEME_VERSION}，跑 sync-theme`);
+      add("warn", `theme 落后：仓库 ${pj.theme_version}，xavierstudio-site-kit ${THEME_VERSION}，跑 sync-theme`);
     }
     // 私有站的样式表必须在白名单里，否则阅读器取不到，整页裸奔
     const themeInScope = inScope.some((p) => p.includes(`${path.basename(themeDir)}/tokens.css`));
@@ -153,5 +153,5 @@ for (const t of targets) {
   if (!issues.length) console.log("    全部通过");
 }
 
-console.log(`\nsite-kit theme v${THEME_VERSION}`);
+console.log(`\nxavierstudio-site-kit theme v${THEME_VERSION}`);
 process.exit(hasError ? 1 : 0);

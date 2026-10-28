@@ -1,9 +1,9 @@
 ---
-name: site-kit
-description: 个人站点的视觉系统与目录规范。新建或改造内容仓库（HTML 站点）、统一页面视觉、处理 portal.json 站点契约、把仓库接入个人门户时使用。含设计令牌、组件原语、脚手架与合规检查脚本。触发词：site-kit、视觉规范、统一样式、设计令牌、portal.json、新建内容仓库、接入门户、theme 同步。
+name: xavierstudio-site-kit
+description: 个人站点的视觉系统与目录规范。新建或改造内容仓库（HTML 站点）、统一页面视觉、处理 portal.json 站点契约、把仓库接入个人门户时使用。含设计令牌、组件原语、脚手架与合规检查脚本。触发词：xavierstudio-site-kit、site-kit、视觉规范、统一样式、设计令牌、portal.json、新建内容仓库、接入门户、theme 同步。
 ---
 
-# site-kit
+# xavierstudio-site-kit
 
 个人站点共用的视觉系统与目录规范。门户（home-portal）、AIKnowledge、Health
 都接这一套。
@@ -35,7 +35,7 @@ description: 个人站点的视觉系统与目录规范。新建或改造内容�
 
 第三层是故意留的。手写内容页各有各的结构，强行塞进统一组件集只会别扭；
 共享令牌就足以统一观感。**改造已有页面的标准手法**：插入两行 `<link>`，
-把页面原有的 `:root` 令牌块改为映射到 site-kit 令牌，再把残留写死色值
+把页面原有的 `:root` 令牌块改为映射到 xavierstudio-site-kit 令牌，再把残留写死色值
 按语义替换。组件规则本身基本不动。
 
 ## 组件词汇

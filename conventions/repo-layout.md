@@ -17,7 +17,7 @@
 ├── portal.json              站点契约
 ├── index.html               入口（entry）
 ├── assets/
-│   └── theme/               site-kit 同步产物，勿手改
+│   └── theme/               xavierstudio-site-kit 同步产物，勿手改
 │       ├── tokens.css
 │       ├── base.css
 │       └── manifest.json
@@ -43,8 +43,8 @@
 
 | 层 | 在哪 | 约束 |
 |---|---|---|
-| 一层 · 令牌 | `assets/theme/tokens.css` | 唯一真相源，由 site-kit 同步 |
-| 二层 · 基础 | `assets/theme/base.css` | 只引用一层，由 site-kit 同步 |
+| 一层 · 令牌 | `assets/theme/tokens.css` | 唯一真相源，由 xavierstudio-site-kit 同步 |
+| 二层 · 基础 | `assets/theme/base.css` | 只引用一层，由 xavierstudio-site-kit 同步 |
 | 三层 · 页面局部 | 各页 `<style>` | 自造组件允许保留，只能引用一层令牌 |
 
 第三层是故意留的。手写内容页各有各的结构（词汇表、流程图、时间线），

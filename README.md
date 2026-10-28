@@ -1,4 +1,4 @@
-# site-kit
+# xavierstudio-site-kit
 
 个人站点的视觉系统与目录规范。供门户（home-portal）与各内容仓库共同引用，
 最终封装成 WorkBuddy Skill，新建仓库时一次性带齐规范。

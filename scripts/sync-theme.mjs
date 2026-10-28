@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 把 site-kit 的 theme 同步到目标仓库，并把版本号写进该仓库的 portal.json。
+ * 把 xavierstudio-site-kit 的 theme 同步到目标仓库，并把版本号写进该仓库的 portal.json。
  *
  *   node scripts/sync-theme.mjs <目标仓库路径> [--dir assets/theme]
  *
@@ -64,7 +64,7 @@ function main() {
     console.warn("  注意：目标仓库没有 portal.json，版本号未记录");
   }
 
-  console.log(`[sync-theme] site-kit v${manifest.version} → ${repo}`);
+  console.log(`[sync-theme] xavierstudio-site-kit v${manifest.version} → ${repo}`);
 }
 
 main();
