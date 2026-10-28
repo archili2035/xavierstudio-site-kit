@@ -6,9 +6,10 @@
  *
  * 选项：
  *   --title     <字符串>  必填，展示名
+ *   --slug      <字符串>  主题英文名（kebab-case），生成 <slug>_index.html 入口页
  *   --summary   <字符串>  一句话描述
  *   --visibility public|private   默认 public
- *   --site      <子目录>  站点根，默认仓库根
+ *   --site      <子目录>  站点根，默认 docs
  *   --force               目标已存在 portal.json 时仍覆盖
  */
 import fs from "node:fs";
@@ -18,7 +19,7 @@ import { execFileSync } from "node:child_process";
 const KIT = path.resolve(import.meta.dirname, "..");
 
 function parseArgs(argv) {
-  const out = { visibility: "public", site: "." };
+  const out = { visibility: "public", site: "docs" };
   out.target = argv[0] && !argv[0].startsWith("--") ? argv[0] : undefined;
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -30,7 +31,7 @@ function parseArgs(argv) {
 
 const args = parseArgs(process.argv.slice(2));
 if (!args.target || !args.title) {
-  console.error('用法: node scripts/init-repo.mjs <目标路径> --title "标题" [--summary "..."] [--visibility public|private] [--site 子目录]');
+  console.error('用法: node scripts/init-repo.mjs <目标路径> --title "标题" [--slug 主题英文名] [--summary "..."] [--visibility public|private] [--site 子目录]');
   process.exit(1);
 }
 if (!["public", "private"].includes(args.visibility)) {
@@ -41,7 +42,8 @@ if (!["public", "private"].includes(args.visibility)) {
 const repo = path.resolve(args.target);
 const siteRel = args.site === "." ? "" : `${args.site.replace(/\/$/, "")}/`;
 const themeDir = `${siteRel}assets/theme`;
-const depth = siteRel ? 0 : 0; // 入口页在站点根，theme 相对前缀为空
+const entryFile = args.slug ? `${args.slug}_index.html` : "index.html";
+const siteGlob = args.site === "." ? "**" : `${args.site.replace(/\/$/, "")}/**`;
 
 fs.mkdirSync(path.join(repo, siteRel || "."), { recursive: true });
 
@@ -56,8 +58,8 @@ const portal = {
   summary: args.summary || args.title,
   visibility: args.visibility,
   site: args.site,
-  entry: "index.html",
-  include: ["index.html", "assets/**"],
+  entry: entryFile,
+  include: [siteGlob],
   exclude: ["tools/**", "scripts/**"],
 };
 fs.writeFileSync(pjPath, JSON.stringify(portal, null, 2) + "\n", "utf8");
@@ -69,9 +71,8 @@ execFileSync(
   { stdio: "inherit" },
 );
 
-const entryPath = path.join(repo, siteRel, "index.html");
+const entryPath = path.join(repo, siteRel, entryFile);
 if (!fs.existsSync(entryPath)) {
-  const prefix = "../".repeat(depth);
   fs.writeFileSync(
     entryPath,
     `<!DOCTYPE html>
@@ -80,8 +81,8 @@ if (!fs.existsSync(entryPath)) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${args.title}</title>
-<link rel="stylesheet" href="${prefix}assets/theme/tokens.css">
-<link rel="stylesheet" href="${prefix}assets/theme/base.css">
+<link rel="stylesheet" href="assets/theme/tokens.css">
+<link rel="stylesheet" href="assets/theme/base.css">
 </head>
 <body>
 
@@ -112,7 +113,7 @@ if (!fs.existsSync(entryPath)) {
 `,
     "utf8",
   );
-  console.log(`  ${siteRel}index.html`);
+  console.log(`  ${siteRel}${entryFile}`);
 }
 
 const giPath = path.join(repo, ".gitignore");
@@ -123,6 +124,6 @@ if (!fs.existsSync(giPath)) {
 
 console.log(`\n[init-repo] ${args.title}（${args.visibility}）已就绪：${repo}`);
 console.log("下一步：");
-console.log("  1. 写内容，页面只引用 tokens.css 里的令牌，不要写死色值");
+console.log("  1. 写内容到 docs/，页面只引用 tokens.css 里的令牌，不要写死色值");
 console.log(`  2. 校验：node ${path.relative(process.cwd(), path.join(KIT, "scripts", "check-repo.mjs"))} ${args.target}`);
 console.log("  3. 推到 GitHub 后，把仓库加进门户 scripts/sync-repos.mjs 的 REPOS");

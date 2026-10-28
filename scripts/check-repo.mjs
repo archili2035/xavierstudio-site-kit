@@ -18,10 +18,9 @@ function globToRe(glob) {
   const re = glob
     .split("/")
     .map((seg) =>
-      seg === "**" ? "(?:.+)" : seg.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^/]*"),
+      seg === "**" ? "(?:.*)" : seg.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^/]*"),
     )
-    .join("/")
-    .replace(/\(\?:\.\+\)\//g, "(?:.+/)?");
+    .join("/");
   return new RegExp(`^${re}$`);
 }
 
@@ -88,7 +87,7 @@ function checkRepo(repoPath) {
   }
 
   // theme 版本与可达性
-  const themeDir = pj.theme_dir || "assets/theme";
+  const themeDir = pj.theme_dir || "docs/assets/theme";
   if (!fs.existsSync(path.join(repo, themeDir, "tokens.css"))) {
     add("error", `未安装 theme：${themeDir}/tokens.css 不存在，跑 sync-theme`);
   } else {
@@ -127,6 +126,12 @@ function checkRepo(repoPath) {
   });
   if (noTheme.length) {
     add("warn", `${noTheme.length} 个页面未引用 theme：\n      ${noTheme.join("\n      ")}`);
+  }
+
+  // 索引页命名：按规范应有 [主题英文名]_index.html 作为主题入口
+  const indexPages = inScope.filter((p) => /(^|\/)[^/]+_index\.html?$/i.test(p));
+  if (indexPages.length === 0) {
+    add("warn", "站点内没有 [主题英文名]_index.html 命名的索引页，建议按 pages.md 补一个主题索引页");
   }
 
   return { name, issues, stats: { files: inScope.length, html: htmlFiles.length } };

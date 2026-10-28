@@ -11,14 +11,15 @@
 | `summary` | 是 | 一句话描述 |
 | `category` | 否 | 分类，用于门户分组 |
 | `visibility` | 是 | `public` 或 `private`，决定走哪条链路 |
-| `site` | 是 | 站点根目录，相对仓库根；`"."` 表示仓库根 |
-| `entry` | 是 | 入口文件，相对站点根，通常是 `index.html` |
-| `include` | 否 | 同步范围 glob 白名单，缺省为全部 |
-| `exclude` | 否 | 排除 glob，优先级高于 include |
+| `site` | 是 | 站点根目录，相对仓库根；统一用 `"docs"` |
+| `entry` | 是 | 入口文件，相对站点根，通常是一个主题索引页 |
+| `include` | 否 | 同步范围 glob 白名单，相对仓库根，缺省为全部 |
+| `exclude` | 否 | 排除 glob，相对仓库根，优先级高于 include |
 | `theme_version` | 自动 | 由 `sync-theme` 写入，用于漂移检测 |
 | `theme_dir` | 自动 | 由 `sync-theme` 写入，theme 落地目录 |
 
-glob 支持 `*`（不跨目录）与 `**`（跨目录）。
+glob 支持 `*`（不跨目录）与 `**`（跨目录）。`include` / `exclude` 相对仓库根，
+所以站点根收进 `docs/` 后要带 `docs/` 前缀。
 
 ## visibility 的含义
 
@@ -38,10 +39,10 @@ glob 支持 `*`（不跨目录）与 `**`（跨目录）。
   "title": "AI 知识库",
   "summary": "AI 概念、模型、产品与方法论的知识图谱与阅读笔记",
   "visibility": "public",
-  "site": ".",
-  "entry": "index.html",
-  "include": ["index.html", "assets/**", "public/**"],
-  "exclude": ["scripts/**", "private/**"]
+  "site": "docs",
+  "entry": "aiknowledge_index.html",
+  "include": ["docs/**"],
+  "exclude": ["tools/**"]
 }
 ```
 
@@ -52,21 +53,21 @@ glob 支持 `*`（不跨目录）与 `**`（跨目录）。
   "title": "健康档案",
   "summary": "历史体检报告、关键指标与纵向趋势",
   "visibility": "private",
-  "site": ".",
-  "entry": "index.html",
+  "site": "docs",
+  "entry": "health_index.html",
   "include": [
-    "index.html", "assets/theme/*.css",
-    "outputs/**/*.html", "data/**/*.json", "reports/processed/**/*.md"
+    "docs/health_index.html", "docs/assets/theme/*.css",
+    "docs/health/**/*.html", "docs/data/**/*.json", "docs/reports/processed/**/*.md"
   ],
-  "exclude": ["reports/raw/**", "tools/**"]
+  "exclude": ["docs/reports/raw/**", "tools/**"]
 }
 ```
 
 ## 容易踩的点
 
-- **`include` 必须覆盖 `entry`**，否则同步报错。
-- **`include` 必须覆盖 theme**（`assets/theme/*.css`）。私有站尤其要注意：
+- **`include` 必须覆盖 `entry`**，否则同步报错（注意带 `docs/` 前缀）。
+- **`include` 必须覆盖 theme**（`docs/assets/theme/*.css`）。私有站尤其要注意：
   阅读器要靠云函数把样式表取回来内联，不在白名单里就拿不到，整页裸奔。
 - **大体积原始素材要 `exclude`**。Health 的 `reports/raw/` 有 16MB 图片，
   站点 HTML 并不引用它们，没必要进同步范围。
-- 路径一律用正斜杠，相对站点根，不要以 `/` 开头。
+- 路径一律用正斜杠，相对仓库根，不要以 `/` 开头。

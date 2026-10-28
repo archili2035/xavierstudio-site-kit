@@ -1,9 +1,11 @@
 # xavierstudio-site-kit
 
 个人站点的视觉系统与目录规范。供门户（home-portal）与各内容仓库共同引用，
-最终封装成 WorkBuddy Skill，新建仓库时一次性带齐规范。
+已封装成 WorkBuddy Skill，新建或改造仓库时一次性带齐规范。
 
-> 当前状态：**v0.1.2 已落地**。门户、Health、AIKnowledge（入口页 + 锚点页）均已接入。
+> 仓库：https://github.com/archili2035/xavierstudio-site-kit
+> 用户级 Skill：`C:\Users\archili\.workbuddy\skills\xavierstudio-site-kit`
+> theme 版本见 `theme/manifest.json`。门户、Health、AIKnowledge 均已接入。
 
 ## 风格口径
 
@@ -32,6 +34,12 @@ theme/
 | 三层 · 页面局部 | 各页自造组件（如知识库的 `glossary-block`） | 允许保留，但只能引用一层令牌 |
 
 第三层的存在是关键：手写内容页不必被塞进统一组件集，只要共享令牌即可统一观感。
+
+## 目录约定
+
+所有挂接门户的工作空间，网页统一放仓库根下的 `docs/` 目录（即站点根），
+每个主题一个索引页，命名 `[主题英文名]_index.html`，配合 GitHub Pages 从
+`/docs` 发布。详见 `conventions/pages.md` 与 `conventions/repo-layout.md`。
 
 ## 组件词汇
 
@@ -62,10 +70,11 @@ python -m http.server 4399
 ## 待办
 
 - [x] 视觉验收
-- [x] `conventions/`：目录规范、portal.json 契约
+- [x] `conventions/`：目录规范、portal.json 契约、网页组织规范
 - [x] `scripts/`：`init-repo` / `sync-theme` / `check-repo`
 - [x] 接入门户 → Health → AIKnowledge 锚点页
 - [x] 修掉阅读器把 `<link>` 一并改写的 bug
+- [x] 推 GitHub 并装为用户级 Skill
+- [ ] 存量仓库迁到 `docs/` 站点根（AIKnowledge、Health 的 `site` 仍是 `.`）
 - [ ] AIKnowledge 剩余 9 个页面迁移
 - [ ] Health 的 QUICKSTART.html / README.html 迁移
-- [ ] 推 GitHub 并装为用户级 Skill

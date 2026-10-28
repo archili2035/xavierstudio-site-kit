@@ -1,6 +1,6 @@
 ---
 name: xavierstudio-site-kit
-description: 个人站点的视觉系统与目录规范。新建或改造内容仓库（HTML 站点）、统一页面视觉、处理 portal.json 站点契约、把仓库接入个人门户时使用。含设计令牌、组件原语、脚手架与合规检查脚本。触发词：xavierstudio-site-kit、site-kit、视觉规范、统一样式、设计令牌、portal.json、新建内容仓库、接入门户、theme 同步。
+description: 个人站点的视觉系统与目录规范。新建或改造内容仓库（HTML 站点）、统一页面视觉、处理 portal.json 站点契约、组织网页目录与主题索引页、把仓库接入个人门户时使用。含设计令牌、组件原语、脚手架与合规检查脚本。触发词：xavierstudio-site-kit、site-kit、视觉规范、统一样式、设计令牌、portal.json、docs 目录、索引页、网页组织、新建内容仓库、接入门户、theme 同步。
 ---
 
 # xavierstudio-site-kit
@@ -12,6 +12,7 @@ description: 个人站点的视觉系统与目录规范。新建或改造内容�
 
 - 新建一个要放 HTML 内容的 GitHub 仓库
 - 给已有仓库统一视觉、接入个人门户
+- 组织一个工作空间里的网页（docs 目录、主题索引页）
 - 调整配色/字阶/间距（改令牌，不改页面）
 - 检查某个仓库是否还守着规范
 
@@ -24,6 +25,12 @@ description: 个人站点的视觉系统与目录规范。新建或改造内容�
 
 苹果的观感很大程度来自摄影与巨幅留白，而这些站点是文字/数据密集页，
 照搬会显得空洞。因此取它的排版与表面体系，数据密集组件在同一语言下重新设计。
+
+## 目录与索引页约定
+
+挂接门户的工作空间，网页统一放仓库根下的 `docs/`（站点根），每个主题一个索引页，
+命名 `[主题英文名]_index.html`（如 `health_index.html`）。网页必须引用 theme 的
+`tokens.css` + `base.css`，与门户视觉一致。详见 `conventions/pages.md`。
 
 ## 三层样式模型
 
@@ -55,7 +62,7 @@ description: 个人站点的视觉系统与目录规范。新建或改造内容�
 node scripts/init-repo.mjs <路径> --title "标题" --summary "描述" --visibility public|private
 
 # 同步 theme 到已有仓库（并写回 portal.json 的 theme_version）
-node scripts/sync-theme.mjs <仓库路径> [--dir assets/theme]
+node scripts/sync-theme.mjs <仓库路径> [--dir docs/assets/theme]
 
 # 合规检查：契约合法性、入口存在、theme 版本漂移、写死色值、未接入页面
 node scripts/check-repo.mjs <仓库路径> [...]
@@ -90,5 +97,6 @@ python -m http.server 4399   # 打开 /theme/preview.html
 ## 参考
 
 - `conventions/repo-layout.md` — 目录规范与硬要求
+- `conventions/pages.md` — 网页组织与索引页命名
 - `conventions/portal-json.md` — 站点契约字段与易错点
 - `theme/preview.html` — 组件总览

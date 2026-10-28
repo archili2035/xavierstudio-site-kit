@@ -2,7 +2,7 @@
 /**
  * 把 xavierstudio-site-kit 的 theme 同步到目标仓库，并把版本号写进该仓库的 portal.json。
  *
- *   node scripts/sync-theme.mjs <目标仓库路径> [--dir assets/theme]
+ *   node scripts/sync-theme.mjs <目标仓库路径> [--dir docs/assets/theme]
  *
  * 为什么是「拷贝」而不是「引用」：
  * 各仓库的 HTML 要在本地 file://、GitHub Pages、门户镜像三处都能直接打开，
@@ -17,7 +17,7 @@ const THEME = path.join(KIT, "theme");
 
 function parseArgs(argv) {
   const [target, ...rest] = argv;
-  let dir = "assets/theme";
+  let dir = "docs/assets/theme";
   for (let i = 0; i < rest.length; i++) {
     if (rest[i] === "--dir" && rest[i + 1]) dir = rest[++i];
   }
